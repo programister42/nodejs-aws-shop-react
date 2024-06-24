@@ -26,7 +26,19 @@ export class StaticSite extends Construct {
                     originAccessIdentity: cloudfrontOAI
                 },
                 behaviors: [{isDefaultBehavior: true}]
-            }]
+            }],
+            errorConfigurations: [
+                {
+                    errorCode: 403,
+                    responseCode: 200,
+                    responsePagePath: '/index.html'
+                },
+                {
+                    errorCode: 404,
+                    responseCode: 200,
+                    responsePagePath: '/index.html'
+                }
+            ]
         });
 
         new aws_s3_deployment.BucketDeployment(this, 'programister42-static-bucket-deployment', {
